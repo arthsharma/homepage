@@ -1,0 +1,16 @@
+.row {
+     
+    background-color: #D2B48C;
+    width: 250px;
+ }
+form{
+    align-items: right;
+    padding: 10px 10px 10px 10px;
+}
+.content-a {
+    padding: 0px 0px 0px 10px;
+}
+.centeritem{
+margin-left:40%;
+margin-top:20%;
+}
