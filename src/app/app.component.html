@@ -1,10 +1,6 @@
 
 <app-authentication [hidden]="isloggedIn" (onLogin)="renderHome($event)" #authentication></app-authentication>
 
-
- <agm-map *ngIf = "isLoggedIn" center='current-position' [zoom]="18" [zoomControl]="true" [latitude]="lat" [longitude]="lng">
-  <agm-marker center='current-position' [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map>
 <app-side-menu *ngIf = "isLoggedIn" (onLogOut)="logOut($event)" ></app-side-menu> 
 
 

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
    @ViewChild(AuthenticationComponent)
   private authenticationComponent: AuthenticationComponent;
+  public user:any;
    isLoggedIn:boolean = false;
   title = 'app';
   lat: number=0 ;
@@ -17,18 +18,11 @@ export class AppComponent {
   location:any;
   renderHome(event){
     this.isLoggedIn = true;
+    this.user=event;
   }
   
   
-  ngOnInit(){
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(position=>{
-         this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
-      });
-      };
-    
-  }
+  
 logOut(event){
   //console.log("hi");
   this.isLoggedIn=false;

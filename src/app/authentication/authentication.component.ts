@@ -1,8 +1,10 @@
 import { Component, OnInit,EventEmitter,Output} from '@angular/core';
+import { Http } from '@angular/http';
 import{ AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { FormBuilder, Validators , FormControl} from '@angular/forms';
+
 @Component({
   selector: 'app-authentication',
   templateUrl: './authentication.component.html',
@@ -11,76 +13,96 @@ import { FormBuilder, Validators , FormControl} from '@angular/forms';
 export class AuthenticationComponent implements OnInit {
   userForm: any;
   public isLoginForm:boolean=true;
-  
+   tweets = [];
 public user: any;
 @Output() onLogin:EventEmitter<object> = new EventEmitter<object>();
 @Output() onLogOut:EventEmitter<object> = new EventEmitter<object>();
-  constructor(private formBuilder: FormBuilder,public afAuth: AngularFireAuth) { 
-     this.userForm = this.formBuilder.group({
-     
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', [Validators.required, Validators.minLength(5)]]
-    });
-    // this.user = afAuth.authState;
+public token: any;
+public secret: any;
+  constructor(private formBuilder: FormBuilder,public afAuth: AngularFireAuth,private http: Http) { 
+  
+     this.user = afAuth.authState;
     this.afAuth.auth.onAuthStateChanged(user=>{
+      console.log(user);
       if(user){
         this.user = user;
-        this.onLogin.emit(user);
+       // alert(user);
+        // http.get('https://api.twitter.com/1.1/statuses/user_timeline.json',{params: {api_key: 'JHPP2IdFKmw8igjDyLj1XnKCH' }}).subscribe
+        // (
+        //   (response) => (response.json()),
+        //   (error) =>(error.json())
+        // )
+        
+        
+        
+         this.onLogin.emit(user);
 
       }
+  
+
     })
   }
 
   ngOnInit() {
   }
 
-  googleLogin():void {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider).then( () => {
-      firebase.auth().getRedirectResult().then( result => {
-        // This gives you a Google Access Token.
-        // You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-
-        console.log(result);
-
-      }).catch(function(error) {
-        // Handle Errors here.
-        console.log(error.message);
-      });
-    });
+  twitterlogin():void {
+    const provider = new firebase.auth.TwitterAuthProvider();
+   firebase.auth().signInWithRedirect(provider);
+firebase.auth().getRedirectResult().then(function(result) {
+  if (result.credential) {
+    this.token= result.credential.accessToken;
+    this.secret = result.credential.secret;
+    console.log(result);
+    alert(JSON.stringify(result));
+    // ...
   }
-  // for signup
-  emailSignUp() {
-    let email = this.userForm.value.email;
-    let password = this.userForm.value.password;
-    if (this.userForm.dirty && this.userForm.valid) {
-     // alert(`Email: ${this.userForm.value.email} Password: ${this.userForm.value.password}`);
-          return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-          .then((user) => {
-           console.log(user);
-           this.user = user
-         })
-          .catch(error => alert(error));
-         }
-         }
+  // The signed-in user info.
+ // var user = result.user;
+}).catch(function(error) {
+  // Handle Errors here.
+  // var errorCode = error.code;
+  // var errorMessage = error.message;
+  // // The email of the user's account used.
+  // var email = error.email;
+  // // The firebase.auth.AuthCredential type that was used.
+  // var credential = error.credential;
+  // ...
+});
 
-    //for login
-    emailLogin() {
-       let email = this.userForm.value.email;
-       let password = this.userForm.value.password;
-       if (this.userForm.dirty && this.userForm.valid) {
-       return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.user = user;
-         this.onLogin.emit(user);
-        //this.updateUserData()
-      })
-      .catch(error => alert(error));
-      }
-      }
+    
+  }
+
+  
+  // for signup
+  // emailSignUp() {
+  //   let email = this.userForm.value.email;
+  //   let password = this.userForm.value.password;
+  //   if (this.userForm.dirty && this.userForm.valid) {
+  //    // alert(`Email: ${this.userForm.value.email} Password: ${this.userForm.value.password}`);
+  //         return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+  //         .then((user) => {
+  //          console.log(user);
+  //          this.user = user
+  //        })
+  //         .catch(error => alert(error));
+  //        }
+  //        }
+
+  //   //for login
+  //   emailLogin() {
+  //      let email = this.userForm.value.email;
+  //      let password = this.userForm.value.password;
+  //      if (this.userForm.dirty && this.userForm.valid) {
+  //      return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+  //     .then((user) => {
+  //       this.user = user;
+  //        this.onLogin.emit(user);
+  //       //this.updateUserData()
+  //     })
+  //     .catch(error => alert(error));
+  //     }
+  //     }
 
 //for logout
   logOut(){
@@ -97,11 +119,11 @@ public user: any;
 //     }
   // }
 
-   resetPassword(email: string) {
-    var auth = firebase.auth();
-    return auth.sendPasswordResetEmail(email)
-      .then(() => console.log("email sent"))
-      .catch((error) => console.log(error))
-  }
+  //  resetPassword(email: string) {
+  //   var auth = firebase.auth();
+  //   return auth.sendPasswordResetEmail(email)
+  //     .then(() => console.log("email sent"))
+  //     .catch((error) => console.log(error))
+  // }
 
 }

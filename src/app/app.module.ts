@@ -7,25 +7,24 @@ import{ AngularFireModule} from 'angularfire2';
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { AgmCoreModule } from '@agm/core';
+
 // import { SettingComponent } from './setting/setting.component';
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCRdb6w8MwW6fuAZmspRZUUg8NJxxVmzbs",
-    authDomain: "assignment-7765c.firebaseapp.com",
-    databaseURL: "https://assignment-7765c.firebaseio.com",
-    projectId: "assignment-7765c",
-    storageBucket: "",
-    messagingSenderId: "1089810418430"
+var firebaseConfig = {
+    apiKey: "AIzaSyBrLJ6FDtpJfONimqYWEoNkwbbJP9suKog",
+    authDomain: "twitter-feed-adf7d.firebaseapp.com",
+    databaseURL: "https://twitter-feed-adf7d.firebaseio.com",
+    projectId: "twitter-feed-adf7d",
+    storageBucket: "twitter-feed-adf7d.appspot.com",
+    messagingSenderId: "314079670922"
   };
-
 @NgModule({
   declarations: [
     AppComponent,   
-    SideMenuComponent, AuthenticationComponent 
+    SideMenuComponent, AuthenticationComponent, 
     // SettingComponent,
     
     
@@ -35,11 +34,10 @@ const firebaseConfig = {
     CollapseModule,
     BrowserModule,
     ReactiveFormsModule,
+     HttpModule,
     //RouterModule.forRoot([{ path: "", component: AuthenticationComponent}]),
     AngularFireModule.initializeApp(firebaseConfig),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyA7wXnA6AbXCCOjowP7pJ0BoFl75-6_L0w'
-    })
+    
   ],
   providers: [AngularFireAuth],
   bootstrap: [AppComponent]

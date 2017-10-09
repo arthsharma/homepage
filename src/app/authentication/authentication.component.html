@@ -1,54 +1,13 @@
 
-<div [hidden]="user" class="container-fluid centeritem">
+
 <div class="row ">
 <div class="col-md-12 ">
-     <form  [formGroup]="userForm" *ngIf="!isLoginForm && !user" (submit)= "emailSignUp()">
-            <div class="form-group" >
-            <label class="form-control-lable">Email</label>
-            <div class="input-group">
-            <input formControlName= "email" type="text" name="email"  id ="email"/>
-            </div>
-            </div>
-
-            <div class="form-group">
-            <label class="form-control-lable">Password</label>
-            <div class="input-group">
-            <input formControlName= "password" type="password" name="password" id="password" />
-            </div>
-            </div> 
-            <button type="submit" >SignUp</button>
-     </form>
-
-     <form [formGroup]="userForm" *ngIf="isLoginForm && !user" (submit)= "emailLogin()">
-            <div class="form-group">
-            <label class="form-control-lable">Email</label>
-            <div class="input-group">          
-            <input formControlName= "email" type="text" name="email"  id ="email"/>
-            </div>
-            </div>
-
-            <div class="form-group">
-            <label class="form-control-lable">Password</label>
-            <div class="input-group">
-            <input formControlName= "password" type="password" name="password" id="password" />
-            </div>
-            </div>
-            <button type="submit" >Login</button>  
-     </form>
-
-    <div class="content-a">
-    <a *ngIf ="isLoginForm && !user" (click)="toggleLoginForm()"> new User?</a>
-    </div>
-    <div class="content-a">
-    <a *ngIf ="!isLoginForm && !user" (click)="toggleLoginForm()">Existing User?</a>
-    </div>
-    <div class="content-a">
-    <a *ngIf ="isLoginForm && !user" (click)="googleLogin()">Google Login</a>
-    </div>
-  <div class="content-a">
-    <a *ngIf = "isLoginForm && !user" (click)="resetPassword()">forget password</a>
-    </div>
    
-</div>
+    <div class="content-a">
+    <a  (click)="twitterlogin()">Twitter Login</a>
+    </div>
+  <p>
+{{ user.displayName
+}}</p>
 </div>
 </div>
